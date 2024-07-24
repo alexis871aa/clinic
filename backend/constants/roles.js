@@ -1,9 +1,7 @@
 const ADMIN = 0;
-const MODERATOR = 1;
-const USER = 2;
+const USER = 1;
 
 module.exports = {
 	ADMIN,
-	MODERATOR,
 	USER,
 };

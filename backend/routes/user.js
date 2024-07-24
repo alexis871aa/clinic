@@ -1,43 +1,58 @@
 const express = require('express');
-const { getUsers, getRoles, updateUser, deleteUser } = require('../controllers/user');
-const hasRole = require('../middlewares/hasRole');
-const authenticated = require('../middlewares/authenticated');
+const { register, login, getUsers } = require('../controllers/user');
 const mapUser = require('../helpers/mapUser');
-const ROLES = require('../constants/roles');
 
 const router = express.Router({ mergeParams: true });
 
-router.get('/', authenticated, hasRole([ROLES.ADMIN]), async (req, res) => {
-	const users = await getUsers();
-
-	res.send({ data: users.map(mapUser), error: null });
-});
-
-router.get('/roles', authenticated, hasRole([ROLES.ADMIN]), (req, res) => {
-	const roles = getRoles();
-
-	res.send({ data: roles, error: null });
-});
-
-router.patch('/:id', authenticated, hasRole([ROLES.ADMIN]), async (req, res) => {
+router.get('/', async (req, res) => {
 	try {
-		const newUser = await updateUser(req.params.id, {
-			role: req.body.roleId,
-		});
+		const users = await getUsers();
 
-		res.send({ data: mapUser(newUser) });
+		res.send({ error: null, users: users.map(mapUser) });
 	} catch (error) {
+		res.send({
+			error: error.message,
+			users: null,
+		});
+	}
+});
+
+router.post('/register', async (req, res) => {
+	try {
+		const { token, user } = await register(req.body.email, req.body.password);
+
+		res.cookie('token', token, { httpOnly: true }).send({
+			error: null,
+			user: mapUser(user),
+		});
+	} catch (error) {
+		if (error.code === 11000) {
+			res.send({ error: 'Such a user already exists!' });
+			return;
+		}
+
 		res.send({ error: error.message || 'Unknown error!' });
 	}
 });
 
-router.delete('/:id', authenticated, hasRole([ROLES.ADMIN]), async (req, res) => {
+router.post('/login', async (req, res) => {
 	try {
-		await deleteUser(req.params.id);
+		const { user, token } = await login(req.body.email, req.body.password);
 
-		res.send({ error: null });
+		res.cookie('token', token, { httpOnly: true }).send({
+			error: null,
+			user: mapUser(user),
+		});
 	} catch (error) {
-		res.send({ error: error.message || 'Unknown error!' });
+		res.send({ error: error.message || 'Unknown error!', user: null });
+	}
+});
+
+router.post('/logout', (req, res) => {
+	try {
+		res.cookie('token', '', { httpOnly: true }).send({});
+	} catch (error) {
+		res.send({ error: error.message || 'Unknown error!', user: null });
 	}
 });
 

@@ -1,35 +1,28 @@
 const mongoose = require('mongoose');
 const validator = require('validator');
 
-const PostSchema = new mongoose.Schema(
+const OrderSchema = new mongoose.Schema(
 	{
-		title: {
+		name: {
 			type: String,
 			required: true,
 		},
-		image: {
+		phone: {
 			type: String,
 			required: true,
 			validate: {
-				validator: (value) =>
-					validator.isURL(value, { protocols: ['http', 'https', 'ftp'] }),
-				message: 'Image should be a valid URL!',
+				validator: (value) => validator.isMobilePhone(value, ['ru-RU']),
+				message: 'Phone number should be a format phone number!',
 			},
 		},
-		content: {
+		problem: {
 			type: String,
 			required: true,
 		},
-		comments: [
-			{
-				type: mongoose.Schema.Types.ObjectId,
-				ref: 'Comment',
-			},
-		],
 	},
 	{ timestamps: true },
 );
 
-const Order = mongoose.model('Order', PostSchema);
+const Order = mongoose.model('Order', OrderSchema);
 
 module.exports = Order;

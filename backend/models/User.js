@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const roles = require('../constants/roles');
+const validator = require('validator');
 
 const UserSchema = new mongoose.Schema(
 	{
@@ -7,6 +8,10 @@ const UserSchema = new mongoose.Schema(
 			type: String,
 			required: true,
 			unique: true,
+			validate: {
+				validator: (value) => validator.isEmail(value),
+				message: 'Email should be a valid email',
+			},
 		},
 		password: {
 			type: String,
@@ -14,7 +19,7 @@ const UserSchema = new mongoose.Schema(
 		},
 		role: {
 			type: Number,
-			default: roles.USER,
+			default: roles.ADMIN,
 		},
 	},
 	{ timestamps: true },
