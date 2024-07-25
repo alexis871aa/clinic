@@ -1,0 +1,36 @@
+.container {
+	display: flex;
+	flex-direction: column;
+}
+
+.title {
+	font-size: 30px;
+	margin: 200px 0 30px 0;
+}
+
+.form {
+	display: flex;
+	flex-direction: column;
+	margin: 0 auto;
+	align-items: center;
+	width: 400px;
+	border: 1px solid #000;
+	border-radius: 10px;
+	box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+label {
+
+}
+
+.inputName,
+.inputPhone {
+	border: 1px solid #000;
+	border-radius: 5px;
+}
+
+.textArea {
+	resize: none;
+	border: 1px solid #000;
+	border-radius: 5px;
+}
