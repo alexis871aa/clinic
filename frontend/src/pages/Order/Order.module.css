@@ -1,36 +1,132 @@
 .container {
-	display: flex;
-	flex-direction: column;
-}
+	   display: flex;
+	   flex-direction: column;
+	   align-items: center;
+	   justify-content: center;
+	   min-height: 100vh;
+	   padding: 20px;
+	   background-color: #f4f4f9;
+   }
 
 .title {
-	font-size: 30px;
-	margin: 200px 0 30px 0;
+	font-size: 32px;
+	font-weight: bold;
+	margin-bottom: 40px;
+	color: #333;
+	text-align: center;
 }
 
 .form {
 	display: flex;
 	flex-direction: column;
-	margin: 0 auto;
-	align-items: center;
-	width: 400px;
-	border: 1px solid #000;
+	width: 100%;
+	max-width: 500px;
+	padding: 20px;
+	border: 1px solid #ddd;
 	border-radius: 10px;
-	box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+	background-color: #fff;
+	position: relative;
+}
+
+.errorWrapper {
+	position: absolute;
+	bottom: -40px;
+	left: 0;
+	right: 0;
+	height: 40px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
 }
 
 label {
-
+	font-size: 18px;
+	margin: 0 0 8px 2px;
+	color: #555;
+	text-align: left;
+	width: 100%;
 }
 
 .inputName,
-.inputPhone {
-	border: 1px solid #000;
+.inputPhone,
+.textArea {
+	font-size: 16px;
+	padding: 10px;
+	margin-bottom: 20px;
+	border: 1px solid #ccc;
 	border-radius: 5px;
+	transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+.inputName:focus,
+.inputPhone:focus,
+.textArea:focus {
+	border-color: #007bff;
+	box-shadow: 0 0 8px rgba(0, 123, 255, 0.25);
+	outline: none;
 }
 
 .textArea {
 	resize: none;
-	border: 1px solid #000;
+	min-height: 100px;
+}
+
+button[type="submit"] {
+	font-size: 16px;
+	font-weight: bold;
+	padding: 10px 20px;
+	border: none;
 	border-radius: 5px;
+	background-color: #007bff;
+	color: #fff;
+	cursor: pointer;
+	transition: background-color 0.3s, box-shadow 0.3s;
+}
+
+button[type="submit"]:hover {
+	background-color: #0056b3;
+	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+button[type="submit"]:active {
+	background-color: #004085;
+	box-shadow: none;
+}
+
+button[type="submit"]:disabled {
+	background-color: #ccc;
+	box-shadow: none;
+}
+
+.loginButton {
+	position: absolute;
+	top: 0;
+	right: 0;
+	margin: 10px 10px 0;
+	background-color: #007bff;
+	color: white;
+	font-size: 16px;
+	font-weight: bold;
+	padding: 10px 20px;
+	border: none;
+	border-radius: 5px;
+	cursor: pointer;
+	transition: background-color 0.3s, box-shadow 0.3s;
+	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.loginButton:hover {
+	background-color: #0056b3;
+	box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+}
+
+.loginButton:active {
+	background-color: #004085;
+	box-shadow: none;
+}
+
+.loginButton:focus {
+	outline: none;
+	box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.25);
 }

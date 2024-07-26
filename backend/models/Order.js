@@ -1,5 +1,4 @@
 const mongoose = require('mongoose');
-const validator = require('validator');
 
 const OrderSchema = new mongoose.Schema(
 	{
@@ -10,10 +9,10 @@ const OrderSchema = new mongoose.Schema(
 		phone: {
 			type: String,
 			required: true,
-			validate: {
-				validator: (value) => validator.isMobilePhone(value, ['ru-RU']),
-				message: 'Phone number should be a format phone number!',
-			},
+			match: [
+				/^\+(495\d{7}|79\d{9})$/,
+				'Phone number should be a format phone number!',
+			],
 		},
 		problem: {
 			type: String,
