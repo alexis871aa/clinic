@@ -17,7 +17,7 @@ async function getOrders(search = '', limit = 10, page = 1) {
 			.skip((page - 1) * limit)
 			.sort({ createdAt: -1 }),
 		Order.countDocuments({
-			title: { $regex: search, $options: 'i' },
+			problem: { $regex: search, $options: 'i' },
 		}),
 	]);
 

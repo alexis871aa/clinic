@@ -43,28 +43,13 @@ async function login(email, password) {
 	};
 }
 
-// get list users
+// getUsers get all users
 async function getUsers() {
 	return await User.find();
-}
-
-// get list roles
-function getRoles() {
-	return [
-		{
-			id: ROLES.ADMIN,
-			name: 'Admin',
-		},
-		{
-			id: ROLES.USER,
-			name: 'User',
-		},
-	];
 }
 
 module.exports = {
 	register,
 	login,
 	getUsers,
-	getRoles,
 };

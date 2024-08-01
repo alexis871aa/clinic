@@ -10,7 +10,7 @@ const OrderSchema = new mongoose.Schema(
 			type: String,
 			required: true,
 			match: [
-				/^\+(495\d{7}|79\d{9})$/,
+				/^\+(74\d{9}|79\d{9})$/,
 				'Phone number should be a format phone number!',
 			],
 		},

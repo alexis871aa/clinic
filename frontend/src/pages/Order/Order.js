@@ -5,7 +5,7 @@ import { useForm } from 'react-hook-form';
 import { addOrderAsync } from '../../store/actions';
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { FormError } from '../../shared/components';
+import { Error } from '../../shared/components';
 import styles from './Order.module.css';
 
 const initialData = {
@@ -28,8 +28,8 @@ const orderSchema = yup.object().shape({
 		.string()
 		.required('Введите пожалуйста номер телефона!')
 		.matches(
-			/^\+(495\d{7}|79\d{9})$/,
-			'Введите пожалуйста корректный номер телефона!',
+			/^\+(74\d{9}|79\d{9})$/,
+			'Введите пожалуйста корректный номер телефона! Формат должен быть +7(код)номер',
 		),
 	problem: yup
 		.string()
@@ -117,7 +117,7 @@ export const Order = () => {
 					Отправить
 				</button>
 				<div className={styles.errorWrapper}>
-					{formError && <FormError>{formError}</FormError>}
+					{formError && <Error>{formError}</Error>}
 				</div>
 			</form>
 			<button className={styles.loginButton} onClick={handleClick}>

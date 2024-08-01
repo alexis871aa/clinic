@@ -3,11 +3,12 @@ import {
 	legacy_createStore as createStore,
 	applyMiddleware,
 } from 'redux';
-import { ordersReducer } from './reducers';
+import { orderReducer, userReducer } from './reducers';
 import { thunk } from 'redux-thunk';
 
 const rootReducer = combineReducers({
-	orders: ordersReducer,
+	order: orderReducer,
+	user: userReducer,
 });
 
 export const store = createStore(rootReducer, applyMiddleware(thunk));

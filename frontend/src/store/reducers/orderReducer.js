@@ -6,20 +6,22 @@ const initialState = {
 	orders: [],
 	isLoading: false,
 	error: null,
+	lastPage: null,
 };
 
-export const ordersReducer = (state = initialState, { type, payload }) => {
+export const orderReducer = (state = initialState, { type, payload }) => {
 	switch (type) {
 		case ACTION_TYPE.ADD_ORDER:
 			return {
 				...state,
-				orders: [...state, payload],
+				orders: [...state.orders, payload],
 			};
 		case ACTION_TYPE.LOAD_ORDERS:
 			return {
 				...state,
-				orders: state.orders.concat(payload),
+				orders: [...payload.orders],
 				isLoading: false,
+				lastPage: payload.lastPage,
 			};
 		case ACTION_TYPE.LOAD_REQUESTED:
 			return {
@@ -41,8 +43,8 @@ export const ordersReducer = (state = initialState, { type, payload }) => {
 export const loadOrders = (args) => async (dispatch) => {
 	dispatch({ type: ACTION_TYPE.LOAD_REQUESTED });
 	try {
-		const orders = request('/orders');
-		dispatch(loadOrdersAsync(orders));
+		const { data } = await request('/orders');
+		dispatch(loadOrdersAsync(data));
 	} catch (error) {
 		dispatch({
 			type: ACTION_TYPE.LOAD_ORDERS_REQUESTED_FAILED,

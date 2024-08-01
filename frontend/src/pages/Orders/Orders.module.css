@@ -1,3 +1,43 @@
 .container {
+	width: 1000px;
+	margin: 0 auto;
+}
 
+.title {
+	font-size: 26px;
+	font-weight: bold;
+	margin: 30px 30px;
+	color: #333;
+	text-align: center;
+}
+
+.loader {
+	font-size: 20px;
+	margin: 30px 30px;
+	color: black;
+	text-align: center;
+}
+
+.table {
+	width: 100%;
+	border-collapse: collapse;
+}
+
+.table th,
+.table td {
+	border: 1px solid #ddd;
+	padding: 8px;
+	text-align: left;
+}
+
+.table th {
+	background-color: #f2f2f2;
+}
+
+.table tr:nth-child(even) {
+	background-color: #f9f9f9;
+}
+
+.table tr:hover {
+	background-color: #ddd;
 }

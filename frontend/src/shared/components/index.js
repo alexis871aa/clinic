@@ -1,1 +1,1 @@
-export * from './FormError/FormError';
+export * from './FormError/Error';

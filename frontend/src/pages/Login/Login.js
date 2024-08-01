@@ -1,7 +1,11 @@
 import { useState } from 'react';
-import { FormError } from '../../shared/components';
+import { useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { Error } from '../../shared/components';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
+import { loginUser } from '../../store/actions';
+import { request } from '../../shared/lib';
 import * as yup from 'yup';
 import styles from './Login.module.css';
 
@@ -32,6 +36,7 @@ const initialDataUser = {
 
 export const Login = () => {
 	const [dataUser, setDataUser] = useState(initialDataUser);
+	const [serverError, setServerError] = useState(null);
 	const {
 		register,
 		handleSubmit,
@@ -43,6 +48,8 @@ export const Login = () => {
 		},
 		resolver: yupResolver(userSchema),
 	});
+	const dispatch = useDispatch();
+	const navigate = useNavigate();
 
 	const handleChange = ({ target }) => {
 		setDataUser((prevState) => ({
@@ -51,9 +58,21 @@ export const Login = () => {
 		}));
 	};
 
-	const onSubmit = (event) => {};
+	const onSubmit = async () => {
+		await request('/users/login', 'post', dataUser).then(({ error, user }) => {
+			if (error) {
+				setServerError(`Ошибка входа: ${error}`);
+				return;
+			}
 
-	const userFormError = errors.email?.message || errors?.password?.message;
+			dispatch(loginUser(user));
+			sessionStorage.setItem('userData', JSON.stringify(user));
+			navigate('/orders');
+		});
+	};
+
+	const formError = errors.email?.message || errors?.password?.message;
+	const errorMessage = formError || serverError;
 
 	return (
 		<div className={styles.container}>
@@ -81,11 +100,11 @@ export const Login = () => {
 					value={dataUser.password}
 					{...register('password', { onChange: handleChange })}
 				/>
-				<button type="submit" disabled={userFormError}>
+				<button type="submit" disabled={formError}>
 					Войти
 				</button>
 				<div className={styles.errorWrapper}>
-					{userFormError && <FormError>{userFormError}</FormError>}
+					{formError && <Error>{errorMessage}</Error>}
 				</div>
 			</form>
 		</div>
