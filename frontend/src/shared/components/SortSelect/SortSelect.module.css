@@ -1,0 +1,18 @@
+.labelSorSelect {
+	margin: 0 40px 0 0;
+}
+
+.sortSelect select {
+	padding: 8px 12px;
+	border: 1px solid #ddd;
+	border-radius: 4px;
+	font-size: 16px;
+	background-color: #fff;
+	color: #333;
+	cursor: pointer;
+	transition: border-color 0.3s;
+}
+
+.sortSelect select:hover {
+	border-color: #007bff;
+}

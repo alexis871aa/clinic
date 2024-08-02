@@ -9,6 +9,8 @@ router.get('/', async (req, res) => {
 		req.query.search,
 		req.query.limit,
 		req.query.page,
+		req.query.sortBy,
+		req.query.order,
 	);
 
 	res.send({ data: { orders: orders.map(mapOrder), lastPage } });

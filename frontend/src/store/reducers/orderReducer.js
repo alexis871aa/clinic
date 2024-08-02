@@ -1,12 +1,13 @@
 import { ACTION_TYPE } from '../constants';
 import { request } from '../../shared/lib';
 import { loadOrdersAsync } from '../actions';
+import { PAGINATION_LIMIT } from '../../shared/constants';
 
 const initialState = {
 	orders: [],
 	isLoading: false,
 	error: null,
-	lastPage: null,
+	lastPage: 1,
 };
 
 export const orderReducer = (state = initialState, { type, payload }) => {
@@ -40,15 +41,19 @@ export const orderReducer = (state = initialState, { type, payload }) => {
 	}
 };
 
-export const loadOrders = (args) => async (dispatch) => {
-	dispatch({ type: ACTION_TYPE.LOAD_REQUESTED });
-	try {
-		const { data } = await request('/orders');
-		dispatch(loadOrdersAsync(data));
-	} catch (error) {
-		dispatch({
-			type: ACTION_TYPE.LOAD_ORDERS_REQUESTED_FAILED,
-			payload: error.message,
-		});
-	}
-};
+export const loadOrders =
+	({ searchPhrase, page, sortBy, order }) =>
+	async (dispatch) => {
+		dispatch({ type: ACTION_TYPE.LOAD_REQUESTED });
+		try {
+			const { data } = await request(
+				`/orders?search=${searchPhrase}&page=${page}&limit=${PAGINATION_LIMIT}&sortBy=${sortBy}&order=${order}`,
+			);
+			dispatch(loadOrdersAsync(data));
+		} catch (error) {
+			dispatch({
+				type: ACTION_TYPE.LOAD_ORDERS_REQUESTED_FAILED,
+				payload: error.message,
+			});
+		}
+	};
